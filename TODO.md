@@ -51,3 +51,5 @@ Plugins
       vertexbot: PersonA, All tests past for foobar!
       OR
       vertexbot: PersonA, Errors running tests for foobar. http://gist.github.com/GISTID
+
+  - lastgist: Post the link to the last gist I  created. Alternatively, allow for searching or filtering by language
