@@ -6,12 +6,15 @@ Features
 Plugins
 -------
   * tell: Have someone issue a 'tell' command and then have vertexbot repeat it back to whom they want.
+
     Example:
+
        PersonA: vertexbot, tell PersonB Apples are better than oranges
        vertexbot: As you wish
        ... 5 minutes later
        ** PersonB join the channel
        vertexbot: PersonB, message from PersonA (5 minutes ago): Apples are better than oranges
+
   * imageme: Google Image search the argument string and return a link to the first image returned
     Example:
       PersonA: vertexbot, imageme hipster cat
