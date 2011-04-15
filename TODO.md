@@ -28,9 +28,9 @@ Plugins
       * PersonA: vertexbot, deploy nodesite.com
       * vertexbot: PersonA, nodesite.com deploy sucessfully!
 
-       OR
+       or
 
-      *vertexbot: PersonA, Error deploying nodesite.com! Error: https://gist.github.com/GISTID
+      * vertexbot: PersonA, Error deploying nodesite.com! Error: https://gist.github.com/GISTID
 
   * sms: Allow authorized people to send me a text message.
 
@@ -38,7 +38,7 @@ Plugins
       * PersonA: vertexbot, text PersonB Your mothers a banana.
       * vertexbot: PersonA, text message sent!
         
-        OR
+      or
       
       * vertexbot: PersonA, You are not authorized to text!
 
@@ -70,8 +70,8 @@ Plugins
       * PersonA: vertexbot, test foobar
       * vertexbot: PersonA, All tests past for foobar!
 
-      OR
+      or
 
       * vertexbot: PersonA, Errors running tests for foobar. http://gist.github.com/GISTID
 
-  - lastgist: Post the link to the last gist I  created. Alternatively, allow for searching or filtering by language
+  * lastgist: Post the link to the last gist I  created. Alternatively, allow for searching or filtering by language
