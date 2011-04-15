@@ -9,11 +9,11 @@ Plugins
 
     Example:
 
-       PersonA: vertexbot, tell PersonB Apples are better than oranges
-       vertexbot: As you wish
-       ... 5 minutes later
-       ** PersonB join the channel
-       vertexbot: PersonB, message from PersonA (5 minutes ago): Apples are better than oranges
+       * PersonA: vertexbot, tell PersonB Apples are better than oranges
+       * vertexbot: As you wish
+       * ... 5 minutes later
+       * ** PersonB join the channel
+       * vertexbot: PersonB, message from PersonA (5 minutes ago): Apples are better than oranges
 
   * imageme: Google Image search the argument string and return a link to the first image returned
     Example:
