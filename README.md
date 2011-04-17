@@ -18,4 +18,5 @@ Events
   Event: 'message'
   --------------
       function(from, to, message)
+
     Emitted when a message is sent in one of the channels the bot is currently residing in.
