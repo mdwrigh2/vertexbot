@@ -1,5 +1,5 @@
 exports.cfg = 
-  name: 'vertex'
+  name: 'vertexbot-example'
   #password:
   server: "irc.freenode.net"
   channels: ["#bottest"]
