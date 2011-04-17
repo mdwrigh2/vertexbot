@@ -15,13 +15,82 @@ Plugins
 
 Events
 ======
-Event: 'message'
---------------
-      function(from, to, message)
-
-  Emitted when a message is sent in one of the channels the bot is currently residing in.
+  This is a list of the events emitted by the bot. Note that most of the commands are actually emitted from node-irc, so see there for further documentation on events.
 Event: 'command'
 --------------
       function(from, to, command, args)
 
   Emitted when a command is issued to the bot. Commands are anything where the bot is directly told something, and the args is just a string with everything after the command issued. For example, the message "bot: do something awesome" would have the command "do" and the args "something awesome".
+
+
+Event: 'message'
+--------------
+      function(from, to, message)
+
+  Emitted when a message is sent in one of the channels the bot is currently residing in.
+
+Event: 'message#channel'
+--------------
+      function(from, message)
+
+  Emitted when a message is sent to the specified channel.
+
+Event: 'motd'
+-------------
+    function(motd)
+
+Event: 'names'
+-------------
+    function(channel, nicks)
+
+Event: 'topic'
+-------------
+    function(channel, topic, nick)
+
+Event: 'join'
+-------------
+    function(channel, nick)
+
+Event: 'join#channel'
+-------------
+    function(nick)
+
+Event: 'part'
+-------------
+    function(channel, nick)
+
+Event: 'part#channel'
+-------------
+    function(nick, reason)
+
+Event: 'quit'
+-------------
+    function(nick, reason, channels)
+
+Event: 'kick'
+-------------
+    function(channel, nick, by, reason)
+
+Event: 'kick#channel'
+-------------
+    function(nick,by,reason)
+
+Event: 'notice'
+-------------
+    function(nick, to, text)
+
+Event: 'pm'
+-------------
+    function(channel, nick)
+
+Event: 'nick'
+-------------
+    function(oldnick, newnick, channels)
+  
+Event: 'raw'
+-------------
+    function(message)
+
+Event: 'error'
+-------------
+    function(message)
