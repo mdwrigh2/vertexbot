@@ -15,7 +15,6 @@ Plugins
 
 Events
 ======
-
 Event: 'message'
 --------------
       function(from, to, message)
