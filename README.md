@@ -20,3 +20,8 @@ Event: 'message'
       function(from, to, message)
 
   Emitted when a message is sent in one of the channels the bot is currently residing in.
+Event: 'command'
+--------------
+      function(from, to, command, args)
+
+  Emitted when a command is issued to the bot. Commands are anything where the bot is directly told something, and the args is just a string with everything after the command issued. For example, the message "bot: do something awesome" would have the command "do" and the args "something awesome".
