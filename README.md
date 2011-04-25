@@ -3,11 +3,11 @@ An extensible IRC bot written in node.js
 Requirements
 ============
   - node-irc
-  - node-mongodb-native
+  - mongoose
 
 Setup
 =====
-  First make sure you have node.js and npm installed. Then use npm to install coffeescript and node-irc and node-mongodb-native. Now just copy example-config.coffee to config.coffee and replace the config options with their appropriate values. Note that some of the plugins may be irc server dependent (mostly freenode). See the documentation for each plugin in order to determine which will work on what network if you aren't sure.
+  First make sure you have node.js and npm installed. Then use npm to install coffeescript and node-irc and mongoose. Now just copy example-config.coffee to config.coffee and replace the config options with their appropriate values. Note that some of the plugins may be irc server dependent (mostly freenode). See the documentation for each plugin in order to determine which will work on what network if you aren't sure.
 
 Plugins
 =======
@@ -16,6 +16,7 @@ Plugins
 Events
 ======
   This is a list of the events emitted by the bot. Note that most of the commands are actually emitted from node-irc, so see there for further documentation on events.
+
 Event: 'command'
 --------------
       function(from, to, command, args)
