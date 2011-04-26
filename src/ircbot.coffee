@@ -22,4 +22,13 @@ class IRCBot extends Client
     for event in plugin.events
       this.on event.action, event.reaction
 
+  say: (name, msg) ->
+    # 400 is purely a guess. I'd have to check the name and the padding for sending a message to determine what the actual
+    # size is. I tried 450 and seemed to run into issues with it, however.
+    while msg.length > 400
+      sending = msg.substr(0, 400)
+      msg = msg.substr(400)
+      super(name, sending+"...")
+    super(name, msg)
+
 exports.IRCBot = IRCBot
