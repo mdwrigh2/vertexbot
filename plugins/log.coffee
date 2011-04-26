@@ -1,4 +1,4 @@
-db = (require 'db.coffee').db
+db = (require './utils/db.coffee').db
 Schema = db.Schema
 ObjectId = Schema.ObjectId
 

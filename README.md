@@ -12,6 +12,7 @@ Setup
 Plugins
 =======
   Plugins are fairly simple to develop, just write the plugin and drop it into the 'plugins/' folder. Plugins should export a list of objects under the events variable, and each object should have an action member that contains a string for what event to react to, and a reaction member function that contains what to do when that event occurs. See the log.coffee plugin for an example.
+  If your plugin is more complex than something you want to put in a single file, place it in a directory and create a front end *script file for the bot to include. If you want the functionality to be available to many plugins, such as the database plugin, place it in the utils folder. Other plugins can require it from there. Again, see the log.coffee plugin for an example of something using a shared utility.
 
 Events
 ======

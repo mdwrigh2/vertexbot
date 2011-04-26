@@ -1,4 +1,4 @@
-cfg = (require '../config.coffee').cfg
+cfg = (require '../../config.coffee').cfg
 mongoose = require 'mongoose'
 
 
