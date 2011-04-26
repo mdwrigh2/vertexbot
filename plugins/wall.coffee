@@ -11,8 +11,10 @@ names = {
 wall = {
   action: 'command'
   reaction: (from, to, command, args) ->
+    now = new Date()
     if command is 'wall'
-        this.say(name, args) for name in nick_names
+      msg = "Message from #{from} (#{now}): #{args}"
+      this.say(name, msg) for name in nick_names
 }
 
 exports.events = [names, wall]
