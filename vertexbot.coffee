@@ -7,7 +7,10 @@ repl = require 'repl'
 IRCBot = (require 'ircbot.coffee').IRCBot
 
 
-cfg = (require './config.coffee').cfg
+try
+  cfg = (require './config.coffee').cfg
+catch error
+  console.log "Error loading config! Are you sure it's in the right place?"
 
 bot = new IRCBot cfg.name, cfg.server, { channels: cfg.channels }
 
