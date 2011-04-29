@@ -1,8 +1,3 @@
-Features
---------
-  - Create a plugin system so that you can just drop plugins into a folder and have them work
-  - Create a way for the plugins to interact with the same mongodb
-
 Plugins
 -------
   * tell: Have someone issue a 'tell' command and then have vertexbot repeat it back to whom they want.
@@ -58,11 +53,6 @@ Plugins
     Example:
       * PersonA: vertexbot, quote The Matrix
       * vertexbot: PersonA, I know Kung Fu -- Neo
-  * lmgtfy: Given a string, produce a lmgtfy link
-
-    Example:
-      * PersonA: vertexbot, lmgtfy foobar
-      * vertexbot: PersonA, http://lmgtfy.com/?q=foobar
 
   * test: Run tests for a configured project, return the result. If errors, gist the output
 
@@ -75,3 +65,4 @@ Plugins
       * vertexbot: PersonA, Errors running tests for foobar. http://gist.github.com/GISTID
 
   * lastgist: Post the link to the last gist I  created. Alternatively, allow for searching or filtering by language
+  * thatswhatshesaid: Using a naive bayesian classifier and a corpus of text (from twitter or something similar), train the bot to interject a "That's what she said!" at the proper points in the conversation

@@ -39,6 +39,7 @@ fs.readdir('plugins', (err, files) ->
       
 )
 
+
 r = repl.start()
 r.context.bot = bot
 r.context.cfg = cfg
