@@ -1,3 +1,6 @@
+#This is my first pass at the math plugin. It lets you evaluate simple mathematical expressions with operator precedence, in a safe way
+# (i.e. not using eval). It's essentially a very simple implementation of the shunting yard algorithm
+
 class Lex
   constructor: (tks) ->
     # Place spaces between all tokens
