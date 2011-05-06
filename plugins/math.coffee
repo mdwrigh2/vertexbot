@@ -157,7 +157,7 @@ parse = (tokens) ->
 math = {
   action: 'command'
   reaction: (from, to, command, message) ->
-    if message == "eval"
+    if command == "eval"
       this.say(to, "#{from}: #{parse(new Lex(message))}")
 }
 
