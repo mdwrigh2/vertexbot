@@ -7,6 +7,7 @@ Tell = new Schema({
   from: String,
   to: String,
   message: String,
+  sent: { type: Boolean, default: false },
   date: { type: Date, default: Date.now }
 })
 
@@ -20,7 +21,7 @@ receive_tell = {
       t = new TellModel()
       t.from = from
       message = utils.trim(message)
-      nick = message.match(/^[A-Za-z][A-Z|a-z|0-9|-|\[|\]|\\|`|\^|\{|\}]*/)
+      nick = message.match(/^[A-Za-z][A-Z|a-z|0-9|-|\[|\]|\\|`|\^|\{|\}]*/) # This is the nick from the RFC
       message = message.substr(message.indexOf(nick)+nick.length+1)
       message = utils.trim(message)
       t.to = nick
@@ -34,13 +35,18 @@ receive_tell = {
 
 
 tell_msg = (nick, channel) ->
-  TellModel.find({name: nick}, (err, tells) ->
+  TellModel.find({name: nick, sent: false}, (err, tells) ->
     if err
       console.log "Error retrieving tell for #{nick}!"
       console.log err
     else
       for tell in tells
         this.say(channel, "Message from #{tell.from} (#{tell.date}): #{tell.message}")
+        tell.sent = true
+        tell.save (err) ->
+          console.log "Message sent but error saving"
+          console.log tell
+          console.log err
   )
 relay_tell_message = {
   action: 'message'
