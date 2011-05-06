@@ -27,8 +27,8 @@ bot.load_plugins(__dirname+'/plugins')
 
 
 # Let the plugins load then open the repl
-setTimeout(0, () ->
-  r = repl.start()
-  r.context.bot = bot
-  r.context.cfg = cfg
-)
+setTimeout((() ->
+    r = repl.start()
+    r.context.bot = bot
+    r.context.cfg = cfg
+  ),0)
