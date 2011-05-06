@@ -21,43 +21,59 @@ receive_tell = {
       t = new TellModel()
       t.from = from
       message = utils.trim(message)
-      nick = message.match(/^[A-Za-z][A-Z|a-z|0-9|-|\[|\]|\\|`|\^|\{|\}]*/) # This is the nick from the RFC
+      nick = message.match(/^[A-Z|a-z|0-9|-|\[|\]|\\|`|\^|\{|\}|\_]+/)[0] # This is the nick from the RFC
+      console.log nick
       message = message.substr(message.indexOf(nick)+nick.length+1)
       message = utils.trim(message)
+      console.log message
       t.to = nick
       t.message = message
-      t.save (err) ->
+      t.save (err) =>
         if err
           console.log "Error storing tell!"
           console.log t
           console.log err
+        else
+          this.say(to, "#{from}, I'll tell #{t.to}")
 }
 
 
-tell_msg = (nick, channel) ->
-  TellModel.find({name: nick, sent: false}, (err, tells) ->
-    if err
-      console.log "Error retrieving tell for #{nick}!"
-      console.log err
-    else
-      for tell in tells
-        this.say(channel, "Message from #{tell.from} (#{tell.date}): #{tell.message}")
-        tell.sent = true
-        tell.save (err) ->
-          console.log "Message sent but error saving"
-          console.log tell
-          console.log err
-  )
 relay_tell_message = {
   action: 'message'
   reaction: (from, to, message) ->
-    tell_msg(from, to)
+    TellModel.find {to: from, sent: false}, (err, tells) =>
+      if err
+        console.log "Error retrieving tell for #{from}!"
+        console.log err
+      else
+        for tell in tells
+          this.say(to, "Message from #{tell.from} (#{tell.date}): #{tell.message}")
+          tell.sent = true
+          tell.save (err) ->
+            if err
+              console.log "Message sent but error saving"
+              console.log tell
+              console.log err
+
 }
 
 relay_tell_join = {
   action: 'join'
   reaction: (channel, nick) ->
-    tell_msg(nick, channel)
+    TellModel.find({to: nick, sent: false}, (err, tells) =>
+      if err
+        console.log "Error retrieving tell for #{nick}!"
+        console.log err
+      else
+        for tell in tells
+          this.say(channel, "Message from #{tell.from} (#{tell.date}): #{tell.message}")
+          tell.sent = true
+          tell.save (err) ->
+            if err
+              console.log "Message sent but error saving"
+              console.log tell
+              console.log err
+    )
 }
 
 exports.events = [relay_tell_message, relay_tell_join, receive_tell]
