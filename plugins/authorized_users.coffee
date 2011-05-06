@@ -15,7 +15,7 @@ AuthorizedUserModel = db.model('AuthorizedUser')
 addAuthorized = {
   action: 'command'
   reaction: (from, to, command, message) ->
-    if command is 'addAuth'
+    if command is 'auth'
       if from is cfg.owner
         name = message.split(/\s+/).filter((x) -> return x)[0]
         AuthorizedUserModel.findOne {name: name}, (err, usr) ->
@@ -31,6 +31,19 @@ addAuthorized = {
                 console.log "Error adding authorized user!"
                 console.log err
         
+}
+
+removeAuthorized = {
+  action: 'command'
+  reaction: (from, to, command, message) ->
+    if command is 'deauth'
+      if from is cfg.owner
+        name = message.split(/\s+/).filter((x) -> return x)[0]
+        AuthorizedUserModel.findOne {name: name}, (err, usr) ->
+          if usr
+            usr.remove()
+          else
+            console.log "#{user} is not an authorized user"
 }
 
 exports.events = [addAuthorized]
