@@ -1,5 +1,5 @@
 Client = (require 'irc').Client
-utils = require __dirname+'/utils.coffee'
+utils = require __dirname+'/utils'
 Emitter = (require 'events').EventEmitter
 fs = require 'fs'
 

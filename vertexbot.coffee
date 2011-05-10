@@ -1,11 +1,11 @@
 fs = require 'fs'
 repl = require 'repl'
 
-IRCBot = (require __dirname+'/src/ircbot.coffee').IRCBot
+IRCBot = (require __dirname+'/src/ircbot').IRCBot
 
 
 try
-  cfg = (require __dirname+'/config.coffee').cfg
+  cfg = (require __dirname+'/config').cfg
 catch error
   console.log "Error loading config! Are you sure it's in the right place?"
 
