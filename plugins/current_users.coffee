@@ -55,8 +55,8 @@ is_online = (nick) ->
   # Just create a function that returns if the nick is on the irc channel. This maybe easiest
   for n in nick_names
     if nick == n
-      return True
-  return False
+      return true
+  return false
 
-exports.nicks = is_online
+exports.is_online = is_online
 exports.events = [names, update_names_part, update_names_quit, update_names_kick, update_names_join]

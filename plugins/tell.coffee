@@ -9,23 +9,41 @@ Tell = new Schema({
   message: String,
   sent: { type: Boolean, default: false },
   date: { type: Date, default: Date.now }
+  pm: { type: Boolean, default: false }
 })
 
 db.model('Tell', Tell)
 TellModel = db.model('Tell')
 
+format_date = (date) ->
+  str = ""
+  str += "0" if date.getDate() < 10
+  str += "#{date.getDate()}/"
+  str += "0" if date.getMonth()+1 < 10
+  str += "#{date.getMonth()+1}/#{date.getFullYear()} @ "
+  str += "0" if date.getHours() < 10
+  str += "#{date.getHours()}:"
+  str += "0" if date.getMinutes() < 10
+  str += "#{date.getMinutes()}:"
+  str += "0" if date.getSeconds() < 10
+  str += "#{date.getSeconds()}"
+  return str
+
+
+
+
 receive_tell = {
   action: 'command'
   reaction: (from, to, command, message) ->
-    if command == "tell"
+    if command == "tell" or command == "pm"
       t = new TellModel()
+      if command == "pm"
+        t.pm = true
       t.from = from
       message = utils.trim(message)
       nick = message.match(/^[A-Z|a-z|0-9|-|\[|\]|\\|`|\^|\{|\}|\_]+/)[0] # This is the nick from the RFC
-      console.log nick
       message = message.substr(message.indexOf(nick)+nick.length+1)
       message = utils.trim(message)
-      console.log message
       t.to = nick
       t.message = message
       t.save (err) =>
@@ -47,7 +65,12 @@ relay_tell_message = {
         console.log err
       else
         for tell in tells
-          this.say(to, "Message from #{tell.from} (#{tell.date}): #{tell.message}")
+          date_string = format_date(tell.date)
+          msg = "Message from #{tell.from} (#{date_string}): #{tell.message}"
+          if tell.pm
+            this.say(tell.to, msg)
+          else
+            this.say(to, msg)
           tell.sent = true
           tell.save (err) ->
             if err
@@ -59,14 +82,19 @@ relay_tell_message = {
 
 relay_tell_join = {
   action: 'join'
-  reaction: (channel, nick) ->
+  reaction: (channel, nick) =>
     TellModel.find({to: nick, sent: false}, (err, tells) =>
       if err
         console.log "Error retrieving tell for #{nick}!"
         console.log err
       else
         for tell in tells
-          this.say(channel, "Message from #{tell.from} (#{tell.date}): #{tell.message}")
+          date_string = format_date(tell.date)
+          msg = "Message from #{tell.from} (#{date_string}): #{tell.message}"
+          if tell.pm
+            this.say(nick, msg)
+          else
+            this.say(channel, msg)
           tell.sent = true
           tell.save (err) ->
             if err
