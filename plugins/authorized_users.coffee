@@ -1,5 +1,5 @@
-db = (require __dirname+'/utils/db.coffee').db
-cfg = (require __dirname+'/../config.coffee').cfg
+db = (require __dirname+'/utils/db').db
+cfg = (require __dirname+'/../config').cfg
 
 Schema = db.Schema
 ObjectId = Schema.ObjectId

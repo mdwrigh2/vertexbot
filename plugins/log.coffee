@@ -1,4 +1,4 @@
-db = (require __dirname+'/utils/db.coffee').db
+db = (require __dirname+'/utils/db').db
 Schema = db.Schema
 ObjectId = Schema.ObjectId
 
