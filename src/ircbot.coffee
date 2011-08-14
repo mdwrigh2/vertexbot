@@ -6,13 +6,13 @@ fs = require 'fs'
 log_format = (from, to, message) ->
   return from + " => " + "to" + ": " + message
 
-with_plugin_files = (dir, cb) ->
+with_plugin_files = (dir, callback) ->
   fs.readdir dir, (err, files) ->
     for file in files
       do (file) ->
         fs.stat dir+'/'+file, (err, stats) ->
           if stats.isFile() and file.match(/\.coffee$/i) or file.match(/\.js$/i)
-            cb file
+            callback file
 
 class IRCBot extends Client
   constructor: (name, server, options) ->
