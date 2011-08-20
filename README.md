@@ -9,6 +9,13 @@ Setup
 =====
   First make sure you have node.js and npm installed. Then use npm to install coffeescript and node-irc and mongoose. Now just copy example-config.coffee to config.coffee and replace the config options with their appropriate values. Note that some of the plugins may be irc server dependent (mostly freenode). See the documentation for each plugin in order to determine which will work on what network if you aren't sure.
 
+    npm install -g coffee-script
+    npm install -g irc
+    npm install -g mongoose --mongodb:native
+
+    # Be sure NODE_PATH is set if you use -g as suggested above. The correct NODE_PATH can be found using: npm root -g
+    coffee vertexbot.coffee
+
 Plugins
 =======
   Plugins are fairly simple to develop, just write the plugin and drop it into the 'plugins/' folder. Plugins should export a list of objects under the events variable, and each object should have an action member that contains a string for what event to react to, and a reaction member function that contains what to do when that event occurs. See the log.coffee plugin for an example.
@@ -40,6 +47,8 @@ Event: 'message#channel'
 Event: 'motd'
 -------------
     function(motd)
+
+  Emitted when the connection to the IRC server is complete and the MOTD has been sent.
 
 Event: 'names'
 -------------

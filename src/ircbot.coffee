@@ -1,10 +1,18 @@
 Client = (require 'irc').Client
-utils = require __dirname+'/utils.coffee'
+utils = require __dirname+'/utils'
 Emitter = (require 'events').EventEmitter
 fs = require 'fs'
 
 log_format = (from, to, message) ->
   return from + " => " + "to" + ": " + message
+
+with_plugin_files = (dir, callback) ->
+  fs.readdir dir, (err, files) ->
+    for file in files
+      do (file) ->
+        fs.stat dir+'/'+file, (err, stats) ->
+          if stats.isFile() and file.match(/\.coffee$/i) or file.match(/\.js$/i)
+            callback file
 
 class IRCBot extends Client
   constructor: (name, server, options) ->
@@ -25,23 +33,25 @@ class IRCBot extends Client
 
   load_plugins: (dir) ->
     this.plugins_dir = dir
-    fs.readdir dir, (err, files) =>
-      for file in files
-        do (file) =>
-          fs.stat dir+'/'+file, (err, stats) =>
-            if stats.isFile() and file.match(/\.coffee$/i) or file.match(/\.js$/i)
-              try
-                plugin = require dir+'/'+file
-                for event in plugin.events
-                  this.on event.action, event.reaction
-                  this.plugin_events.push(event)
-                console.log("Plugin loaded: #{file}")
-              catch error
-                console.log('Error loading plugin: ' + file)
-                console.log error
+    with_plugin_files dir, (file) =>
+      try
+        plugin = require "#{dir}/#{file}"
+        for event in plugin.events
+          this.on event.action, event.reaction
+          this.plugin_events.push(event)
+        console.log("Plugin loaded: #{file}")
+      catch error
+        console.log('Error loading plugin: ' + file)
+        console.log error
+
+  unload_plugins: (dir) ->
+    with_plugin_files dir, (file) ->
+      delete require.cache["#{dir}/#{file}"]
+
   reload_plugins: () ->
     for event in this.plugin_events
       this.removeListener event.action, event.reaction
+    this.unload_plugins(this.plugins_dir)
     this.load_plugins(this.plugins_dir)
 
   plugin_events: []
