@@ -19,7 +19,6 @@ addAuthorized = {
       if from is cfg.owner
         name = message.split(/\s+/).filter((x) -> return x)[0]
         AuthorizedUserModel.findOne {name: name}, (err, usr) ->
-          console.log(usr)
           if usr
             console.log "Authorized User #{usr.name} was already authorized."
           else
@@ -42,8 +41,9 @@ removeAuthorized = {
         AuthorizedUserModel.findOne {name: name}, (err, usr) ->
           if usr
             usr.remove()
+            console.log "Deauthorized User #{usr.name}."
           else
-            console.log "#{user} is not an authorized user"
+            console.log "#{name} is not an authorized user"
 }
 
-exports.events = [addAuthorized]
+exports.events = [addAuthorized, removeAuthorized]

@@ -17,4 +17,4 @@ wall = {
       this.say(name, msg) for name in nick_names
 }
 
-exports.events = [names, wall]
+exports.events = []
