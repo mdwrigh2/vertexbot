@@ -5,12 +5,14 @@ class Lex
   constructor: (tks) ->
     # Place spaces between all tokens
     tokens_regex = ///
-      [\d]+ | # a series of digits
+      [-]?[\d]+[.][\d]+| # floating point digits
+      [-]?[\d]+ | # a series of digits
       [a-zA-Z]+ | # a series of alphas (in case I ever implement variables)
       [\]\[!"#$%&'()*+,./:;<=>?@\^_`{|}~-] # punctuation
       ///g
 
     tks = tks.replace(tokens_regex, (x) -> x + ' ')
+    console.log(tks)
     # Then split on spaces and remove empty nodes (e.g. if you have the string "  foo  bar", you'll get the array
     # ['','foo', 'bar']. The filter will remove the first element in array leaving you with the array ['foo', 'bar'], which is what you want.
     @tokens = tks.split(/[\s]+/).filter((x) -> return x)
@@ -63,7 +65,10 @@ class Node
       else
         if not child?
           throw "Input Error!"
-        values.push(parseInt(child))
+        console.log(child.toString())
+        flt = parseFloat(child.toString())
+        console.log(flt)
+        values.push(flt)
     if @op is '+'
       val = values.reduce(((p,c) -> return p+c), 0)
     else if @op is '-'

@@ -82,7 +82,7 @@ relay_tell_message = {
 
 relay_tell_join = {
   action: 'join'
-  reaction: (channel, nick) =>
+  reaction: (channel, nick) ->
     TellModel.find({to: nick, sent: false}, (err, tells) =>
       if err
         console.log "Error retrieving tell for #{nick}!"
