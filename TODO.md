@@ -69,3 +69,5 @@ Plugins
   * thatswhatshesaid: Using a naive bayesian classifier and a corpus of text (from twitter or something similar), train the bot to interject a "That's what she said!" at the proper points in the conversation
 
   * Keep a list of nicks and channels theyre in. This should just be a global object thats passed around. It should contain members whos identifier is the channel name and it contains an array of nicks in the channel. Additionally there should be a member that contains all the nicks on the server which are in at least one of the channels the bot is in.
+
+  * Make vertexbot self  updating (i.e. authorized users can have it pull from the git repository)
