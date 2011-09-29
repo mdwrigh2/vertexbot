@@ -18,17 +18,20 @@ addAuthorized = {
     if command is 'auth'
       if from is cfg.owner
         name = message.split(/\s+/).filter((x) -> return x)[0]
-        AuthorizedUserModel.findOne {name: name}, (err, usr) ->
+        AuthorizedUserModel.findOne {name: name}, (err, usr) =>
           if usr
-            console.log "Authorized User #{usr.name} was already authorized."
+            this.say(to, "Authorized User #{usr.name} was already authorized.")
           else
-            console.log "Authorizing #{name}"
             usr = new AuthorizedUserModel()
             usr.name = name
-            usr.save (err)->
+            usr.save (err) =>
               if err
-                console.log "Error adding authorized user!"
+                this.say to, "Error adding authorized user!"
                 console.log err
+              else
+                this.say to, "#{name} has been authorized"
+      else
+        this.say to, "You must be the owner to authorize users!"
         
 }
 
@@ -38,12 +41,20 @@ removeAuthorized = {
     if command is 'deauth'
       if from is cfg.owner
         name = message.split(/\s+/).filter((x) -> return x)[0]
-        AuthorizedUserModel.findOne {name: name}, (err, usr) ->
+        AuthorizedUserModel.findOne {name: name}, (err, usr) =>
           if usr
             usr.remove()
-            console.log "Deauthorized User #{usr.name}."
+            this.say to, "Deauthorized user #{usr.name}."
           else
-            console.log "#{name} is not an authorized user"
+            this.say to, "#{name} is not an authorized user"
 }
 
+is_authorized = (nick, success, failure=()->) ->
+  AuthorizedUserModel.findOne {name: nick}, (err, usr) =>
+    if usr || nick is cfg.owner
+      success()
+    else
+      failure()
+
 exports.events = [addAuthorized, removeAuthorized]
+exports.is_authorized = is_authorized
