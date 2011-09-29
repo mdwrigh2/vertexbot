@@ -66,7 +66,7 @@ relay_tell_message = {
       else
         for tell in tells
           date_string = format_date(tell.date)
-          msg = "Message from #{tell.from} (#{date_string}): #{tell.message}"
+          msg = "#{tell.to}, message from #{tell.from} (#{date_string}): #{tell.message}"
           if tell.pm
             this.say(tell.to, msg)
           else
@@ -90,7 +90,7 @@ relay_tell_join = {
       else
         for tell in tells
           date_string = format_date(tell.date)
-          msg = "Message from #{tell.from} (#{date_string}): #{tell.message}"
+          msg = "#{nick}, message from #{tell.from} (#{date_string}): #{tell.message}"
           if tell.pm
             this.say(nick, msg)
           else
