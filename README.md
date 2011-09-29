@@ -7,16 +7,21 @@ Requirements
 
 Setup
 =====
-First make sure you have node.js and npm installed, then run:
-      git submodule update --init
-from the root vertexbot directory. If you don't have coffeescript installed, you can either install it globally by running:
-      npm install -g coffee-script
+First make sure you have node.js and npm installed, then from the root vertexbot directory, run:
+
+    git submodule update --init
+
+
+If you don't have coffeescript installed, you can either install it globally by running:
+
+    npm install -g coffee-script
 or locally for this project by running:
-      npm install
+
+    npm install
   
 Now just copy example-config.coffee to config.coffee and replace the config options with their appropriate values. Note that some of the plugins may be irc server dependent (mostly freenode). See the documentation for each plugin in order to determine which will work on what network if you aren't sure.
 Finally, to start the bot run:
-      coffee vertexbot.coffee
+    coffee vertexbot.coffee
 
 Plugins
 =======
