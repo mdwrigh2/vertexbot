@@ -12,7 +12,6 @@ class Lex
       ///g
 
     tks = tks.replace(tokens_regex, (x) -> x + ' ')
-    console.log(tks)
     # Then split on spaces and remove empty nodes (e.g. if you have the string "  foo  bar", you'll get the array
     # ['','foo', 'bar']. The filter will remove the first element in array leaving you with the array ['foo', 'bar'], which is what you want.
     @tokens = tks.split(/[\s]+/).filter((x) -> return x)
@@ -65,10 +64,7 @@ class Node
       else
         if not child?
           throw "Input Error!"
-        console.log(child.toString())
-        flt = parseFloat(child.toString())
-        console.log(flt)
-        values.push(flt)
+        values.push(parseFloat(child))
     if @op is '+'
       val = values.reduce(((p,c) -> return p+c), 0)
     else if @op is '-'
