@@ -1,4 +1,5 @@
 db = (require __dirname+'/utils/db').db
+cfg = (require __dirname+'/../config').cfg
 utils = require __dirname+'/../src/utils'
 Schema = db.Schema
 ObjectId = Schema.ObjectId
@@ -67,7 +68,9 @@ relay_tell_message = {
         for tell in tells
           date_string = format_date(tell.date)
           msg = "#{tell.to}, message from #{tell.from} (#{date_string}): #{tell.message}"
-          if tell.pm
+          # If this tell is supposed to be a PM or if it the message
+          # is sent to the bot in a PM, then respond in a PM.
+          if tell.pm or to is cfg.name
             this.say(tell.to, msg)
           else
             this.say(to, msg)
