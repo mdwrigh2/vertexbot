@@ -34,9 +34,9 @@ Events
 
 Event: 'command'
 --------------
-      function(from, to, command, args)
+      function(sender, respondee, command, args)
 
-  Emitted when a command is issued to the bot. Commands are anything where the bot is directly told something, and the args is just a string with everything after the command issued. For example, the message "bot: do something awesome" would have the command "do" and the args "something awesome".
+  Emitted when a command is issued to the bot. Commands are anything where the bot is directly told something, and the args is just a string with everything after the command issued. For example, the message "bot: do something awesome" would have the command "do" and the args "something awesome". The sender is the person who sent the message, and respondee is the place to send the response. If the message is sent in a channel, this will be the channel to respond in. If this was sent in a PM, it will be the nick of the person who sent it.
 
 
 Event: 'message'

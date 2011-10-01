@@ -19,13 +19,17 @@ class IRCBot extends Client
     super(server, name, options)
     this.on 'message', (from, to, message) ->
       message = utils.trim(message)
-      if message.match(new RegExp("^#{name}", 'i'))
+      if message.match(new RegExp("^#{name}", 'i')) or to is name
         msg_split = (msg for msg in message.split(/\s/) when msg.length > 0)
-        msg_split.shift() # Shift off the name, we no longer need it
+        if message.match(new RegExp("^#{name}", 'i'))
+          msg_split.shift() # Shift off the name, we no longer need it
+          return_location = to
+        else
+          return_location = from
         command = msg_split.shift()
-        args = message.substr(message.indexOf(command)+command.length)
-        args = utils.trim(args) # We lose the spacing off the front of the args here. I'm okay with that
-        this.emit('command', from, to, command, args)
+        args = message.substr(message.indexOf(command) + command.length)
+        args = utils.trim args # We lose the spacing off the front of the args here. I'm okay with that
+        this.emit 'command', from, return_location, command, args
 
   load_plugin: (plugin) ->
     for event in plugin.events
