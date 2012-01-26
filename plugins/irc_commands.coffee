@@ -1,4 +1,6 @@
-auth = (require __dirname+'/authorized_users')
+auth  = require __dirname + '/authorized_users'
+utils = require __dirname + '/../src/utils'
+
 join = {
   action: 'command'
   reaction: (from, to, command, args) ->
@@ -17,4 +19,17 @@ part = {
         this.part(chan)
 }
 
-exports.events = [join, part]
+change_nick = {
+  # We need to update the bots nick, and make sure any nick checks use
+  # bot.nick and not cfg.nick
+  action: 'command'
+  reaction: (sender, respondee, command, args) ->
+    if command is "nick"
+      auth.is_authorized sender, () =>
+        new_nick = args.split()[0]
+        this.say respondee, "Changing my name to #{new_nick}"
+        this.send 'NICK', new_nick
+
+}
+
+exports.events = [join, part, change_nick]
