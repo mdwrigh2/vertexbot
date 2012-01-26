@@ -17,7 +17,7 @@ with_plugin_files = (dir, callback) ->
 class IRCBot extends Client
   constructor: (name, server, options) ->
     super(server, name, options)
-    this.on 'message', (from, to, message) ->
+    this.addListener 'message', (from, to, message) ->
       message = utils.trim(message)
       if message.match(new RegExp("^#{name}", 'i')) or to is name
         msg_split = (msg for msg in message.split(/\s/) when msg.length > 0)
@@ -33,7 +33,7 @@ class IRCBot extends Client
 
   load_plugin: (plugin) ->
     for event in plugin.events
-      this.on event.action, event.reaction
+      this.addListener event.action, event.reaction
 
   load_plugins: (dir) ->
     this.plugins_dir = dir
@@ -41,7 +41,7 @@ class IRCBot extends Client
       try
         plugin = require "#{dir}/#{file}"
         for event in plugin.events
-          this.on event.action, event.reaction
+          this.addListener event.action, event.reaction
           this.plugin_events.push(event)
         console.log("Plugin loaded: #{file}")
       catch error
@@ -63,10 +63,18 @@ class IRCBot extends Client
   say: (name, msg) ->
     # 400 is purely a guess. I'd have to check the name and the padding for sending a message to determine what the actual
     # size is. I tried 450 and seemed to run into issues with it, however.
-    while msg.length > 400
-      sending = msg.substr(0, 400)
-      msg = msg.substr(400)
-      super(name, sending+"...")
-    super(name, msg)
+    if msg? and name?
+      while msg.length > 400
+        sending = msg.substr(0, 400)
+        msg = msg.substr(400)
+        super(name, sending+"...")
+      super(name, msg)
+    else
+      if not msg? and not name?
+        console.log "Error sending message: name and message are undefined"
+      else if not msg?
+        console.log "Error sending message: message is undefined"
+      else
+        console.log "Error sending message: name is undefined"
 
 exports.IRCBot = IRCBot
