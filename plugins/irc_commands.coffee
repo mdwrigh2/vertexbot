@@ -1,5 +1,6 @@
 auth  = require __dirname + '/authorized_users'
 utils = require __dirname + '/../src/utils'
+cfg   = require __dirname + '/../config.coffee'
 
 join = {
   action: 'command'
@@ -40,4 +41,10 @@ reload_plugins = {
         this.reload_plugins()
 }
 
-exports.events = [join, part, change_nick, reload_plugins]
+source = {
+  action: 'command'
+  reaction: (sender, respondee, command, args) ->
+    if command is "source"
+      this.say respondee, "My source is available at https://github.com/mdwrigh2/vertexbot"
+}
+exports.events = [join, part, change_nick, reload_plugins, source]
