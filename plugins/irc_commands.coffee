@@ -29,7 +29,15 @@ change_nick = {
         new_nick = args.split()[0]
         this.say respondee, "Changing my name to #{new_nick}"
         this.send 'NICK', new_nick
-
 }
 
-exports.events = [join, part, change_nick]
+reload_plugins = {
+  action: 'command'
+  reaction: (sender, respondee, command, args) ->
+    if command is "reload" and args.match(/plugins/i)
+      auth.is_authorized sender, () =>
+        this.say respondee, "Reloading plugins..."
+        this.reload_plugins()
+}
+
+exports.events = [join, part, change_nick, reload_plugins]
