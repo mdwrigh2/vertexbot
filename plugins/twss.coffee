@@ -1,7 +1,7 @@
 twss = require 'twss'
 auth = require __dirname+'/authorized_users'
 
-twss.threshold = 0.9
+twss.threshold = 0.999
 
 twss_action = {
   action: 'message'
