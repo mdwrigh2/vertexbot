@@ -26,6 +26,9 @@ twss_threshold = {
       num = parseFloat(args.split(/\s/)[3])
       if num?
         twss.threshold = num
+        this.say respondee, "Threshold set to " + num + "!"
+      else
+        this.say respondee, "Error setting threshold"
 }
 
 exports.events = [twss_action, twss_threshold]
