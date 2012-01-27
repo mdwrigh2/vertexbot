@@ -17,6 +17,7 @@ with_plugin_files = (dir, callback) ->
 class IRCBot extends Client
   constructor: (name, server, options) ->
     super(server, name, options)
+    this.setMaxListeners 100 # This can be set higher if need be
     this.addListener 'message', (from, to, message) ->
       message = utils.trim(message)
       if message.match(new RegExp("^#{name}", 'i')) or to is name
