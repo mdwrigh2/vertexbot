@@ -1,4 +1,5 @@
 twss = require 'twss'
+auth = require __dirname+'/authorized_users'
 
 twss.threshold = 0.9
 
@@ -23,12 +24,13 @@ twss_threshold = {
   action: 'command'
   reaction: (sender, respondee, command, args) ->
     if command is "set" and args.match(/^twss threshold to /i)
-      num = parseFloat(args.split(/\s/)[3])
-      if num?
-        twss.threshold = num
-        this.say respondee, "Threshold set to " + num + "!"
-      else
-        this.say respondee, "Error setting threshold"
+      auth.is_authorized sender, () =>
+        num = parseFloat(args.split(/\s/)[3])
+        if num?
+          twss.threshold = num
+          this.say respondee, "Threshold set to " + num + "!"
+        else
+          this.say respondee, "Error setting threshold"
 }
 
 exports.events = [twss_action, twss_threshold]
