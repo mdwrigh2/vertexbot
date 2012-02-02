@@ -27,7 +27,7 @@ class IRCBot extends Client
           return_location = to
         else
           return_location = from
-        if msg_split > 0
+        if msg_split.length > 0
           command = msg_split.shift()
           args = message.substr(message.indexOf(command) + command.length)
           args = utils.trim args # We lose the spacing off the front of the args here. I'm okay with that
