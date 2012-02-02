@@ -27,10 +27,11 @@ class IRCBot extends Client
           return_location = to
         else
           return_location = from
-        command = msg_split.shift()
-        args = message.substr(message.indexOf(command) + command.length)
-        args = utils.trim args # We lose the spacing off the front of the args here. I'm okay with that
-        this.emit 'command', from, return_location, command, args
+        if msg_split > 0
+          command = msg_split.shift()
+          args = message.substr(message.indexOf(command) + command.length)
+          args = utils.trim args # We lose the spacing off the front of the args here. I'm okay with that
+          this.emit 'command', from, return_location, command, args
 
   load_plugin: (plugin) ->
     for event in plugin.events
