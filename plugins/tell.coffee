@@ -43,6 +43,7 @@ receive_tell = {
       t.from = from
       message = utils.trim(message)
       nick = message.match(/^[A-Z|a-z|0-9|\-|\[|\]|\\|`|\^|\{|\}|\_]+/)[0] # This is the nick from the RFC
+      nick = nick.toLowerCase()
       message = message.substr(message.indexOf(nick)+nick.length+1)
       message = utils.trim(message)
       t.to = nick
@@ -60,6 +61,7 @@ receive_tell = {
 relay_tell_message = {
   action: 'message'
   reaction: (from, to, message) ->
+    from = from.toLowerCase()
     TellModel.find {to: from, sent: false}, (err, tells) =>
       if err
         console.log "Error retrieving tell for #{from}!"
@@ -86,6 +88,7 @@ relay_tell_message = {
 relay_tell_join = {
   action: 'join'
   reaction: (channel, nick) ->
+    nick = nick.toLowerCase()
     TellModel.find({to: nick, sent: false}, (err, tells) =>
       if err
         console.log "Error retrieving tell for #{nick}!"
