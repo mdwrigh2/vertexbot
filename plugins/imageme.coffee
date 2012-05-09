@@ -18,6 +18,9 @@ imageme = {
           pageData += chunk
         res.on 'end', () =>
           imgs = pageData.match /imgurl=[^&]*&/ig
+          if not imgs?
+            this.say respondee, "#{sender}: Come up with something less obscure, there are no results for that"
+            return
           imgs = (item.trim() for item in imgs)
           imgs = (item.substr(7, item.length-8) for item in imgs)
           this.say respondee, "#{sender}: #{imgs[Math.floor(Math.random() * imgs.length)]}"
